@@ -24,6 +24,7 @@
                 const canvas : HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement; 
        
                 const cw = canvas.width;
+                
                 const ch = canvas.height;
 
                 const pixels = 64;
