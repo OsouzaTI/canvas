@@ -1,52 +1,67 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { Colors } from '@/Constants/Colors';
 
+export interface CanvasState {
+    canvasGrid: null | any[][];
+    canvasWidth: number;
+    canvasHeight: number;
+    canvasPixels: number;
+    canvas: null | HTMLCanvasElement;
+    context: null | CanvasRenderingContext2D;
+}
 
 const useCanvasStore = defineStore('canvas', {
-    state: () => ({
-        canvasWidth: 320,
-        canvasHeight: 320,
-        canvasPixels: 2
+    state: () : CanvasState => ({
+        canvasGrid: null,
+        canvas: null,
+        context: null,
+        canvasWidth: 640,
+        canvasHeight: 480,
+        canvasPixels: 32,
     }),
     getters: {
         width: (state) => state.canvasWidth,
         height: (state) => state.canvasHeight,
         pixels: (state) => state.canvasPixels,
+        grid: (state) => state.canvasGrid
     },
     actions: {
-        aumentarPixels() {
-            this.canvasPixels += 8;            
-            console.log('Aumentando ', this.pixels)
-            this.load();
+        setTamanhoPixel(pixels : number) {
+            this.canvasPixels = pixels;
         },
-        load() {
-
-            const canvas : HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
-            const cw = canvas.width;
-            const ch = canvas.height;
-
-            // const pixels = 64;
-            const pw = Math.ceil(cw / this.pixels); // pixel width
-            const ph = Math.ceil(ch / this.pixels); // pixel height
-
-            const grid = Array.from(Array(this.pixels), () => Array(this.pixels).fill(Colors.BLACK));
-
-            grid[1][1] = Colors.BLUE;
-
-            const context2d = canvas.getContext('2d')!;
-
-            context2d.clearRect(0, 0, this.width, this.height);
+        setPixel(x : number, y : number, color : string) {
+            console.log(x, y, color);
+            if (x >= 0 && x < this.pixels-1 && y >= 0 && y < this.pixels-1)
+                this.canvasGrid![x][y] = color;
+        },
+        clear() {
+            this.context!.clearRect(0, 0, this.width, this.height);
+            this.canvasGrid = Array.from(Array(this.pixels), () => Array(this.pixels).fill(Colors.BLACK));
+        },
+        render() {
+            
+            const cw = this.canvas!.width;
+            const ch = this.canvas!.height;
+            
+            const pw = Math.ceil(cw / this.pixels);
+            const ph = Math.ceil(ch / this.pixels);
 
             for (let x = 0; x < this.pixels; x++)
             {
                 for (let y = 0; y < this.pixels; y++)
                 {
-                    context2d.fillStyle = grid[x][y];
-                    context2d.fillRect(x*pw+1, y*ph+1, pw-1, ph-1);
+                    this.context!.fillStyle = this.grid![x][y];
+                    this.context!.fillRect(x*pw+1, y*ph+1, pw-1, ph-1);
                 }
             }
+        },
+        load() {
 
+            this.canvas = document.getElementById('canvas') as HTMLCanvasElement;
+            this.context = this.canvas.getContext('2d')!;
+            this.clear();
+            this.render();
+            
         }
     }
 })
