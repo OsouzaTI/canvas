@@ -1,12 +1,16 @@
 <script setup lang="ts">
+import { useAlgorithmStore } from '@/stores/algorithm';
+
     const { placeholder, options } = defineProps(['placeholder', 'options'])
+    const store = useAlgorithmStore();
 </script>
 
-<template>    
-    <select name="algoritmo" class="p-2 rounded-sm m-2 w-full text-black">
-        <option value="" selected disabled>{{ placeholder }}</option>
-        <option v-for="(option, id) in options" :value="option" :key="id">
-            {{ option }}
-        </option>
-    </select>
+<template> 
+    <div class="flex justify-around">
+        <sub>{{ store.getAlgorithm }}</sub>
+        <div v-for="(option, id) in options" class="flex gap-2">        
+            <input v-model="store.$state.algorithm" type="radio" name="algoritmo"  :value="option" :key="id" :id="option" />
+            <label :for="option">{{ option }}</label>
+        </div>  
+    </div> 
 </template>
