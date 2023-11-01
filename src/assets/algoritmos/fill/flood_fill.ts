@@ -2,8 +2,13 @@ import { Colors } from "@/Constants/Colors";
 import { useCanvasStore } from "@/stores/canvas";
 import type { FloodFill } from "@/types/PlotFunction";
 
-export function flood_fill(props : FloodFill) {
+export async function flood_fill(props : FloodFill) {
     const store = useCanvasStore();
+    
+    await new Promise(resolve => setTimeout(() => {
+        store.render();
+        resolve(0);
+    }, 500));
 
     const {x, y} = props.seed;
     if (store.grid![x][y] == Colors.BLACK) {

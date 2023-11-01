@@ -4,7 +4,7 @@
 </script>
 
 <template>
-    <header class="flex flex-col gap-2">
+    <header class="flex flex-col items-start justify-center gap-2">
         <div>
             <label class="font-bold">Tamanho do pixel: </label>
             <input @change="store.load()" v-model="store.$state.canvasPixels" type="number" min="2" step="2" class="text-black rounded-sm p-1 w-20" />

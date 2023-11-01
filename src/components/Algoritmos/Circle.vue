@@ -1,13 +1,13 @@
 <script setup lang="ts">
     import { useCoordinateStore } from '@/stores/coodinates';
-    import Dropdown from './Dropdown.vue';
+    import RadioInput from './RadioInput.vue';
     const algoritmos = ['Parametrico', 'Bresenham'];
     const store = useCoordinateStore();
 </script>
 
 <template>
     <header class="flex flex-col justify-around h-full">
-        <Dropdown placeholder="Selecione um algoritmo" :options="algoritmos" />
+        <RadioInput placeholder="Selecione um algoritmo" :options="algoritmos" />
         <header class="flex flex-col items-center gap-4">
             <div class="flex gap-2">
                 <label class="font-bold uppercase w-1/2">xc</label>

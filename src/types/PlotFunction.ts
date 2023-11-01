@@ -17,4 +17,12 @@ interface FloodFill {
     seed: Point2D,
 }
 
-export { LineFunc, CircleFunc, FloodFill }
+interface AnaliseGeometrica {
+    setPixel : (x: number, y: number, color : string) => void;
+    top: number,
+    bottom: number,
+    left: number,
+    right: number
+}
+
+export { LineFunc, CircleFunc, FloodFill, AnaliseGeometrica }

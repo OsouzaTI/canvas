@@ -17,7 +17,7 @@ const useCanvasStore = defineStore('canvas', {
         context: null,
         canvasWidth: 640,
         canvasHeight: 480,
-        canvasPixels: 32,
+        canvasPixels: 64,
     }),
     getters: {
         width: (state) => state.canvasWidth,
@@ -45,7 +45,7 @@ const useCanvasStore = defineStore('canvas', {
             
             const pw = Math.ceil(cw / this.pixels);
             const ph = Math.ceil(ch / this.pixels);
-
+            
             for (let x = 0; x < this.pixels; x++)
             {
                 for (let y = 0; y < this.pixels; y++)
@@ -54,6 +54,7 @@ const useCanvasStore = defineStore('canvas', {
                     this.context!.fillRect(x*pw+1, y*ph+1, pw-1, ph-1);
                 }
             }
+
         },
         load() {
 
